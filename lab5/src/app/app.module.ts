@@ -8,11 +8,15 @@ import {AngularFirestoreModule} from "@angular/fire/firestore";
 import {environment} from "../environments/environment";
 import {CoursesService} from "./shared/courses.service";
 import { SearchComponent } from './search/search.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
