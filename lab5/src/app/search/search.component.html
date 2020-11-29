@@ -1,0 +1,5 @@
+<!--iterate through all courses in data and populate list -->
+<table>
+  <li *ngFor="let course of allCourses">{{ course.payload.doc.data().name}}</li>
+  <li *ngFor="let course of allCourses">{{ course.payload.doc.data().id}}</li>
+</table>
