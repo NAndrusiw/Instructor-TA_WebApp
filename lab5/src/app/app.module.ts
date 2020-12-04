@@ -11,6 +11,10 @@ import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
+import { ScheduleComponent } from './schedule/schedule.component';
+
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
@@ -19,12 +23,15 @@ import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
     LoginComponent,
     HomeComponent,
     SignUpFormComponent,
+    ScheduleComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
   AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [CoursesService],
   bootstrap: [AppComponent]

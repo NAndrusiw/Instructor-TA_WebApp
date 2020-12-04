@@ -1,0 +1,89 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Schedule Name</th>
+    <th scope="col">Schedule Description</th>
+    <th scope="col">Publish?</th>
+    <th scope="col">No. of courses</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let schedule of allSchedules">
+    <th scope="row">{{ schedule.name }}</th>
+    <td> {{ schedule.description }}</td>
+    <td>
+    {{ schedule.published ? 'Published' : 'Not Published' }}
+    </td>
+    <td>Y</td>
+    <td>
+
+      <!-- Example split danger button -->
+      <div class="btn-group">
+        <button  (click)="scheduleService.populateForm(schedule)" type="button" class="btn btn-light">Edit</button>
+        <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Add Course</a>
+          <a class="dropdown-item" href="#">See Courses</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" (click)="scheduleService.deleteSchedule(schedule)">Delete Schedule</a>
+        </div>
+      </div>
+
+
+
+    </td>
+
+  </tr>
+
+  </tbody>
+</table>
+
+<div class="card">
+  <div class="card-body">
+    <h3> {{ scheduleService.isScheduleEditMode ? 'Edit schedule' : 'Create a new schedule:' }}</h3>
+
+    <form (ngSubmit)="saveSchedule()" novalidate [formGroup]="this.scheduleService.form">
+
+      <input formControlName="$id" type="hidden" name="$id">
+      <div class="form-group">
+        <input [ngClass]="{
+        'is-invalid': !formControls.name.valid && formControls.name.dirty
+        }" type="text" name="name" formControlName="name" class="form-control"  placeholder="Enter name">
+        <div [hidden]="formControls.name.valid" class="invalid-feedback">
+       error! missing your fuckin name
+        </div>
+      </div>
+
+      <div class="form-group">
+        <textarea name="description" formControlName="description" class="form-control"  placeholder="Enter description"></textarea>
+      </div>
+
+
+      <div class="col-sm-10">
+        <div class="form-check">
+
+          <input formControlName="published" name="published" class="form-check-input" type="checkbox" name="gridRadios" id="publish" value="true" checked>
+          <label class="form-check-label" for="publish">
+            Publish
+          </label>
+        </div>
+
+        <div class="form-group row mt-3">
+          <div class="col-12">
+            <button [disabled]="this.scheduleService.form.status != 'VALID'"
+                    type="submit"
+                    class="btn btn-primary">
+                           {{ scheduleService.isScheduleEditMode ? 'update schedule' : 'create Schedule' }}
+            </button>
+
+            <a [hidden]="!this.scheduleService.isScheduleEditMode" (click)="this.scheduleService.isScheduleEditMode = false; this.scheduleService.form.reset()" class="btn btn-secondary">Cancel editing</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

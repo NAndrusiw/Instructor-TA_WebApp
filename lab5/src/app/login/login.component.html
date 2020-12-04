@@ -12,18 +12,11 @@
     </label>
   </div>
   <button class="btn mb-4  btn-lg btn-primary btn-block" type="submit">Sign in</button>
-<!--if user is logged in, show signout button, otherwise displau login form-->
-  <div *ngIf="auth.user$ | async as user; else login">
-    {{ user | json }}
-    <button class="btn btn-primary w-100 btn-block" (click)="auth.signOut()">
-      Sign out
-    </button>
-  </div>
-</form>
-</div>
-<ng-template #login>
+
   <button (click)="auth.googleSignIn()" class="btn btn-block btn-warning">
     sign in with google
   </button>
-</ng-template>
+</form>
+</div>
+
 
