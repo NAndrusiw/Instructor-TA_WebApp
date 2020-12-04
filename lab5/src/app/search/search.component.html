@@ -26,14 +26,14 @@
     <div class="collapse card" id="search-{{course.id}}">
       <div class="card-body">
       Course Description: {{ course.description }}
-        <br>Course Number: {{course.number}}
-        <br>Course Time: {{course.days}}
-        <br>Course Component: {{course.component}}
-        <br>Course id: {{course.id}}
-        <br> Course Name: {{course.name}}
-        <br> Course Section: {{course.section}}
-        <br> Course Status: {{course.status}}
-        <br>
+        <br>Course Number: {{ course.number }}
+        <br>Course Time: {{ course.days }}
+        <br>Course Component: {{ course.component }}
+        <br>Course id: {{ course.id }}
+        <br> Course Name: {{ course.name }}
+        <br> Course Section: {{course.section }}
+        <br> Course Status: {{ course.status }}
+        <br> Subject: {{ course.subject }}
 
         <select  #scheduleName class="form-control">
           <option  *ngFor="let schedule of allSchedules" value="{{ schedule.$id }}">{{ schedule.name}}</option>

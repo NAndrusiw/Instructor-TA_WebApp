@@ -25,7 +25,6 @@ export class ScheduleService {
     published: new FormControl(false),
   })
 
-
   getAllSchedules() {
     // @ts-ignore
     this.schedulesList = this.firestore.collection('schedules');
@@ -33,7 +32,7 @@ export class ScheduleService {
   }
 
   populateForm(schedule) {
-    const {uid, created_date, updated_date, ...data} = schedule;
+    const {uid, created_date, courses, updated_date, ...data} = schedule;
     this.form.setValue(data);
     this.isScheduleEditMode = true;
   }
@@ -74,12 +73,16 @@ export class ScheduleService {
   }
 
   deleteSchedule(schedule) {
-    console.log(schedule.$id);
-    this.schedulesList.doc(schedule.$id).delete().then(() => {
-      console.log('Deleted!');
-    }).catch((error) => {
-      console.log('Error deleting! ', error);
-    })
+
+    if (confirm('Are you sure you wanna delete this schedule?')) {
+      console.log(schedule.$id);
+      this.schedulesList.doc(schedule.$id).delete().then(() => {
+        console.log('Deleted!');
+      }).catch((error) => {
+        console.log('Error deleting! ', error);
+      })
+    }
+
 
   }
 

@@ -40,7 +40,9 @@ export class ScheduleComponent implements OnInit {
 
 
   onDelete(schedule) {
-    this.scheduleService.deleteSchedule(schedule);
+
+        this.scheduleService.deleteSchedule(schedule);
+
   }
 
   saveSchedule() {
