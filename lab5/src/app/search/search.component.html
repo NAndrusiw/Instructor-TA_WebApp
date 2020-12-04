@@ -1,12 +1,25 @@
+<input type="text" (keyup)="search()" class="form-control" [(ngModel)]="searchInput">
+<select class="form-control" (change)="search()" [(ngModel)]="searchComponent">
+  <option value=""></option>
+  <option value="LAB">LAB</option>
+  <option value="TUT">TUT</option>
+  <option value="LEC">LEC</option>
+</select>
+
+<select class="form-control" (change)="search()" [(ngModel)]="subjectInput">
+  <option value=""></option>
+  <option *ngFor="let subject of getAllSubjects()" value="{{ subject }}">{{ subject }}</option>
+</select>
 <!--iterate through all courses in data and populate list -->
 <table>
-  <li *ngFor="let course of allCourses">
+  <li *ngFor="let course of filteredCourses">
 
-    {{ course.payload.doc.data().name}}
+    {{ course.name}}
     -
-  {{ course.payload.doc.data().id }}
+  {{ course.id }}
 
   </li>
 
 
 </table>
+<script src="FuzzySearch.js"></script>

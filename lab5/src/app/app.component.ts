@@ -11,7 +11,6 @@ export class AppComponent implements OnInit{
   title = 'lab5';
   user: User;
 
-
   constructor(public auth: AuthService) {
     this.auth.user$.subscribe(user$ => this.user = user$);
   }

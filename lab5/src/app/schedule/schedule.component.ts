@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ScheduleService} from "../services/schedule.service";
 import {FormBuilder} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
-
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
