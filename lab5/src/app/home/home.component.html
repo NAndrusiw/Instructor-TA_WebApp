@@ -5,4 +5,33 @@
     <p class="card-text">This project allows users to draft a schedule of available courses, courses can be searched by various different elements. Limited functionality is available to unregistered users</p>
   </div>
 </div>
+
+<!--restrictions based on type of user, and associated permissions referenced from auth.service.ts-->
+<!--i.e: different roles are assigned to different types of users(admin, guest, user)-->
+<!--based on the role a user carries, permissions for that user are determined in auth.service.ts-->
+<!--those restrictions apply here where we can determine which roles can see/interact with what elements on the page-->
+
+
+<!--Div, page displayed to user differently depending on their role-->
+<!--available to users with permission to use isGuest() in auth.service.ts -->
+<div *ngIf="auth.isGuest(user)">
+  <button class="btn btn-primary">
+    Login
+  </button>
+</div>
+
+{{ user?.name }}
+
+<!--<div *ngIf="!auth.isGuest(user)">-->
+<!--  <button (click)="auth.signOut()" class="btn btn-primary">-->
+<!--    Log out-->
+<!--  </button>-->
+<!--</div>-->
+
+
+<!--Admin permission-->
+<div *ngIf="auth.isAdmin(user)">
+  YOU ARE THE ADMIN
+</div>
+
 <app-search></app-search>

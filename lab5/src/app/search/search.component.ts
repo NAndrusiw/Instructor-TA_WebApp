@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CoursesService} from "../shared/courses.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-search',

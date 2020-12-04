@@ -10,6 +10,7 @@ import {CoursesService} from "./shared/courses.service";
 import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { HomeComponent } from './home/home.component';
     SearchComponent,
     LoginComponent,
     HomeComponent,
+    SignUpFormComponent,
   ],
   imports: [
     BrowserModule,
