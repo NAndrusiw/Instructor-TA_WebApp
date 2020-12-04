@@ -11,15 +11,43 @@
   <option *ngFor="let subject of getAllSubjects()" value="{{ subject }}">{{ subject }}</option>
 </select>
 <!--iterate through all courses in data and populate list -->
-<table>
-  <li *ngFor="let course of filteredCourses">
-
-    {{ course.name}}
-    -
-  {{ course.id }}
-
-  </li>
 
 
-</table>
+  <div *ngFor="let course of filteredCourses">
+
+    <a data-toggle="collapse" class="mb-3" href="#search-{{course.id}}" role="button">
+      {{ course.name}}
+      -
+      {{ course.id }} {{ course.name}}
+      -
+      {{ course.id }}
+    </a>
+
+    <div class="collapse card" id="search-{{course.id}}">
+      <div class="card-body">
+      Course Description: {{ course.description }}
+        <br>Course Number: {{course.number}}
+        <br>Course Time: {{course.days}}
+        <br>Course Component: {{course.component}}
+        <br>Course id: {{course.id}}
+        <br> Course Name: {{course.name}}
+        <br> Course Section: {{course.section}}
+        <br> Course Status: {{course.status}}
+        <br>
+
+        <select  #scheduleName class="form-control">
+          <option  *ngFor="let schedule of allSchedules" value="{{ schedule.$id }}">{{ schedule.name}}</option>
+        </select>
+        <button type="button" (click)="scheduleService.addCourseToSchedule(scheduleName.value, course.id)" class="btn btn-primary">Add to Schedule </button>
+
+      </div>
+      <!-- button to add a course to the schedule -->
+      <!-- dropdown select to choose a schedule -->
+    </div>
+
+
+  </div>
+
+
+
 <script src="FuzzySearch.js"></script>

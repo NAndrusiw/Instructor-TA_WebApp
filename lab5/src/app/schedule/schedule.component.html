@@ -15,7 +15,7 @@
     <td>
     {{ schedule.published ? 'Published' : 'Not Published' }}
     </td>
-    <td>Y</td>
+    <td>{{ scheduleService.getNumberOfCourses(schedule) }}</td>
     <td>
 
       <!-- Example split danger button -->

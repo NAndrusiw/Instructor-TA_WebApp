@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CoursesService} from "../shared/courses.service";
 import {AuthService} from "../services/auth.service";
 import FuzzySearch from 'fuzzy-search';
+import {ScheduleService} from "../services/schedule.service";
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -9,18 +10,36 @@ import FuzzySearch from 'fuzzy-search';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private coursesService: CoursesService) {
+  constructor(private coursesService: CoursesService, public scheduleService: ScheduleService, public auth: AuthService) {
   }
 
   searchInput: string;
   allCourses;
   filteredCourses;
+  allSchedules: any;
 
   subjectInput: string;
   searchComponent: string;
 
   ngOnInit(): void {
     this.getCourses();
+    this.loadSchedules();
+  }
+
+
+  loadSchedules() {
+    this.scheduleService.getAllSchedules().subscribe(res => {
+      this.allSchedules = res;
+      this.allSchedules = res.map(item => {
+        // console.log(item);
+        return {
+          // @ts-ignore
+          $id: item.payload.doc.id,
+          // @ts-ignore
+          ...item.payload.doc.data()
+        };
+      });
+    });
   }
 
   getCourses = () => this.coursesService.getAll().subscribe(res => {
@@ -76,7 +95,7 @@ export class SearchComponent implements OnInit {
     });
 
 
-    const searcher = new FuzzySearch(this.filteredCourses, ['component', 'name', 'id', 'number', 'subject'], {
+    const searcher = new FuzzySearch(this.filteredCourses, ['name', 'id', 'number', 'subject'], {
       caseSensitive: false,
       sort: true,
     });

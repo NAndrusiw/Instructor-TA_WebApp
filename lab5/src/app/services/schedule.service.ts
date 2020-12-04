@@ -54,13 +54,13 @@ export class ScheduleService {
   }
 
   addCourseToSchedule($scheduleId, $courseId) {
-    console.log($scheduleId, $courseId);
-    // @ts-ignore
-    this.firestore.collection(`schedules/${$scheduleId}/courses`).add({
-      courseId: $courseId
-    })
-    // this.schedulesList.doc($scheduleId).ref().child('/courses').push({
-    // })
+    console.log($scheduleId, $courseId)
+    this.schedulesList.doc($scheduleId).set({
+      courses: {
+        [$courseId]: true
+      }
+    }, {merge: true})
+
   }
 
   updateSchedule($id, schedule) {
@@ -83,4 +83,10 @@ export class ScheduleService {
 
   }
 
+  getNumberOfCourses(schedule: any) {
+    if (schedule.courses) {
+      return Object.keys(schedule.courses).length;
+    }
+  return 0;
+  }
 }
