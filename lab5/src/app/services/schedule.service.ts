@@ -92,4 +92,16 @@ export class ScheduleService {
     }
   return 0;
   }
+
+
+  deleteCourse(schedule, courseId) {
+    if (confirm('you sure you wanna delete this course')) {
+      const {courses} = schedule;
+      delete courses[courseId];
+
+      schedule.courses = courses;
+      this.updateSchedule(schedule.$id, schedule);
+    }
+
+  }
 }

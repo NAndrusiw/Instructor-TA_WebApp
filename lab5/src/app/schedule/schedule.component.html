@@ -70,7 +70,7 @@
             <span class="sr-only">Toggle Dropdown</span>
           </button>
           <div class="dropdown-menu">
-            <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" href="#">Display Course List</a>
+            <a class="dropdown-item"  (click)="getCoursesInSchedule(schedule)" >Display Course List</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item text-danger" (click)="scheduleService.deleteSchedule(schedule)">Delete Schedule</a>
           </div>
@@ -81,11 +81,11 @@
   </table>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="showcourses" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">schedule.name</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{ selectedSchedule?.name }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -108,29 +108,18 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let schedule of allSchedules">
-            <td><button type="button" class="btn btn-danger">Remove Course</button></td>
-            <th scope="row" *ngFor=""let course of>{{ schedule.courses}}</th>
-            <td> {{ schedule.description }}</td>
-            <td>
-              {{ schedule.published ? 'Published' : 'Not Published' }}
-            </td>
-            <td>{{ scheduleService.getNumberOfCourses(schedule) }}</td>
-            <td>
+          <tr *ngFor="let course of selectedScheduleCourses">
+            <td><button type="button" (click)="deleteCourseInSchedule(selectedSchedule, course.id)" class="btn btn-danger">Remove Course</button></td>
+            <th scope="row">{{ course.name }}</th>
+            <td> {{ course.id }}</td>
+            <td> {{ course.subject }}</td>
+            <td> {{ course.component }}</td>
+            <td> {{ course.section }}</td>
+            <td> {{ course.number }}</td>
+            <td> {{ course.description }}</td>
+            <td>{{ course.days }}</td>
+            <td>{{ course.status }}</td>
 
-              <!-- Example split danger button -->
-              <div class="btn-group">
-                <button  (click)="scheduleService.populateForm(schedule)" type="button" class="btn btn-light">Edit</button>
-                <button type="button" class="btn btn-light dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" href="#">Display Course List</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item text-danger" (click)="scheduleService.deleteSchedule(schedule)">Delete Schedule</a>
-                </div>
-              </div>
-            </td>
           </tr>
           </tbody>
         </table>
@@ -138,7 +127,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

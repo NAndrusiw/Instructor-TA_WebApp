@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CoursesService} from "../shared/courses.service";
 import {AuthService} from "../services/auth.service";
 import FuzzySearch from 'fuzzy-search';
 import {ScheduleService} from "../services/schedule.service";
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -18,7 +19,7 @@ export class SearchComponent implements OnInit {
   filteredCourses;
   allSchedules: any;
 
-  subjectInput: string;
+  userInput_Subject: string;
   searchComponent: string;
 
   ngOnInit(): void {
@@ -59,7 +60,7 @@ export class SearchComponent implements OnInit {
 
   });
 
-  getAllSubjects() {
+  allSubjects() {
     let all = this.allCourses.map(item => {
       return item.subject;
     });
@@ -67,12 +68,11 @@ export class SearchComponent implements OnInit {
   }
 
 
-
-  search() {
+  searchCourses() {
 
     // console.log('searching')
 
-    if (this.searchInput === "" || this.searchComponent === "" || this.subjectInput === "") {
+    if (this.searchInput === "" || this.searchComponent === "" || this.userInput_Subject === "") {
       this.filteredCourses = this.allCourses;
     }
 
@@ -84,23 +84,23 @@ export class SearchComponent implements OnInit {
     this.filteredCourses = this.filteredCourses.filter(item => {
 
 
-      if (this.subjectInput && !this.searchComponent) {
-        return item.subject === this.subjectInput;
-      } else if (!this.subjectInput && this.searchComponent) {
+      if (this.userInput_Subject && !this.searchComponent) {
+        return item.subject === this.userInput_Subject;
+      } else if (!this.userInput_Subject && this.searchComponent) {
         return item.component === this.searchComponent;
-      } else if (this.subjectInput && this.searchComponent) {
-        return item.subject === this.subjectInput && item.component === this.searchComponent;
+      } else if (this.userInput_Subject && this.searchComponent) {
+        return item.subject === this.userInput_Subject && item.component === this.searchComponent;
       }
       return true;
     });
 
 
-    const searcher = new FuzzySearch(this.filteredCourses, ['name', 'id', 'number', 'subject'], {
+    const course_Search = new FuzzySearch(this.filteredCourses, ['name', 'id', 'number', 'subject'], {
       caseSensitive: false,
       sort: true,
     });
 
-    this.filteredCourses = searcher.search(this.searchInput);
+    this.filteredCourses = course_Search.search(this.searchInput);
 
   }
 }

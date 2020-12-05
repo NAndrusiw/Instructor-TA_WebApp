@@ -1,13 +1,34 @@
 <div class="text-center">
-  <form class="form-signin">
+  <form (ngSubmit)="register()" novalidate [formGroup]="this.auth.registerForm">
     <h1 class="h3 mb-3 font-weight-heavy">Register an account</h1>
     <p>Complete the form below and click 'Register' to create your new account, or head over to the 'Login' page to easily sign-up with Google! </p>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+    <label for="email" class="sr-only">Email address</label>
+    <input id="email" [ngClass]="{
+    'is-invalid': !formControls.email.valid && formControls.email.dirty
+}" type="email" formControlName="email" class="form-control" placeholder="name@address.com">
+    <div [hidden]="formControls.email.valid" class="invalid-feedback">
+      Please enter a valid email address.
+    </div>
+
+    <label for="password" class="sr-only">Password</label>
+    <input [ngClass]="{
+
+    'is-invalid': !formControls.password.valid && formControls.password.dirty
+}" formControlName="password" id="password"  type="password" class="form-control form-control-appended" placeholder="Choose a password">
+    <div [hidden]="formControls.password.valid" class="invalid-feedback">
+      Please enter a new password.
+    </div>
+
     <label for="name" class="sr-only">Name</label>
-    <input type="text" id="name" class="form-control" placeholder="Name" required autofocus>
+    <input [ngClass]="{
+
+    'is-invalid': !formControls.displayName.valid && formControls.displayName.dirty
+}" type="text" formControlName="displayName" id="name" class="form-control" placeholder="Enter a name">
+    <div [hidden]="formControls.displayName.valid" class="invalid-feedback">
+      Please enter your name.
+    </div>
+
 
     <button class="btn mb-4  btn-lg btn-primary btn-block" type="submit">Register</button>
 

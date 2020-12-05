@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, NgZone} from '@angular/core';
 import {Router} from "@angular/router";// use to redirect users when they log out
 import firebase from 'firebase/app';//we beeennnnnnn using firebase
 import {AngularFireAuth} from "@angular/fire/auth";
@@ -12,16 +12,34 @@ import {
 
 import {Observable, of} from "rxjs";
 import {switchMap} from "rxjs/operators";
-import {User} from "./user.model";//import user interface
+import {User} from "./user.model";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+
+//import user interface
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
   user$: Observable<User>;// user document, dynamic, type to User
 
+
+  registerForm = new FormGroup({
+    displayName: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required)
+  })
+
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required)
+  })
+
+
+
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone,
   ) {
     //define user observable right away in constructor ASAPP
     //set to listen for user from this authState var
@@ -113,5 +131,49 @@ isGuest(user: User): boolean{
   //   const allowed = ['students', 'admin'];
   //   return this.checkAuthorization(user, allowed);
   // }
+
+
+
+
+// Sign up with email/password
+  signUp(user) {
+    const {email, password} = user;
+
+    this.afAuth.createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log({...result.user, ...user})
+        this.updateUserData({...result.user, ...user});
+        this.sendVerificationEmail(); // send verification email
+      }).catch((error) => {
+      window.alert(error.message)
+    })
+  }
+
+  async sendVerificationEmail() {
+    (await this.afAuth.currentUser).sendEmailVerification().then(() => {
+      window.alert('You must verify your email before you can log in. Please check your email');
+    })
+  }
+
+  isEmailVerified() {
+
+  }
+
+  // Sign in
+  signIn(email, password) {
+    return this.afAuth.signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        if (result.user.emailVerified !== true) {
+          this.sendVerificationEmail();
+        } else {
+          this.ngZone.run(() => {
+            this.router.navigate(['/dashboard']);
+          });
+        }
+        this.updateUserData(result.user)
+      }).catch((error) => {
+        window.alert(error.message)
+      })
+  }
 
 }

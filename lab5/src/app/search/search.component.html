@@ -1,24 +1,24 @@
-<input type="text" (keyup)="search()" class="form-control" [(ngModel)]="searchInput">
-<select class="form-control" (change)="search()" [(ngModel)]="searchComponent">
+<input type="text" (keyup)="searchCourses()" class="form-control" [(ngModel)]="searchInput">
+<select class="form-control" (change)="searchCourses()" [(ngModel)]="searchComponent">
   <option value=""></option>
   <option value="LAB">LAB</option>
   <option value="TUT">TUT</option>
   <option value="LEC">LEC</option>
 </select>
 
-<select class="form-control" (change)="search()" [(ngModel)]="subjectInput">
+<select class="form-control" (change)="searchCourses()" [(ngModel)]="userInput_Subject">
   <option value=""></option>
-  <option *ngFor="let subject of getAllSubjects()" value="{{ subject }}">{{ subject }}</option>
+  <option *ngFor="let subject of allSubjects()" value="{{ subject }}">{{ subject }}</option>
 </select>
-<!--iterate through all courses in data and populate list -->
 
 
+<!--iterates through courses pulled from db to return dynamic results w/ multiple combinations of search variables-->
   <div *ngFor="let course of filteredCourses">
 
     <a data-toggle="collapse" class="mb-3" href="#search-{{course.id}}" role="button">
-      {{ course.name}}
+      {{ course.name }}
       -
-      {{ course.id }} {{ course.name}}
+      {{ course.id }} {{ course.name }}
       -
       {{ course.id }}
     </a>
@@ -35,14 +35,13 @@
         <br> Course Status: {{ course.status }}
         <br> Subject: {{ course.subject }}
 
+        <!-- dropdown select to choose a schedule -->
         <select  #scheduleName class="form-control">
           <option  *ngFor="let schedule of allSchedules" value="{{ schedule.$id }}">{{ schedule.name}}</option>
         </select>
+        <!-- button to add a course to the schedule -->
         <button type="button" (click)="scheduleService.addCourseToSchedule(scheduleName.value, course.id)" class="btn btn-primary">Add to Schedule </button>
-
       </div>
-      <!-- button to add a course to the schedule -->
-      <!-- dropdown select to choose a schedule -->
     </div>
 
 
