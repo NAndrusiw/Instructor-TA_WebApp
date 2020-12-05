@@ -95,20 +95,22 @@
         <table class="table">
           <thead>
           <tr>
+            <th scope ="col">DROP that shit</th>
             <th scope="col">Course Name</th>
             <th scope="col">Course id</th>
             <th scope="col">Subject</th>
             <th scope="col">Course Component</th>
+            <th scope="col">Course Section</th>
             <th scope="col">Course Number</th>
             <th scope="col">Course Description</th>
-            <th scope="col">Course Description</th>
-            <th scope="col">Course Days</th>
-            <th scope="col">Course Days</th>
+            <th scope="col">Date & Time</th>
+            <th scope="col">Status</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let schedule of allSchedules">
-            <th scope="row">{{ schedule.name }}</th>
+            <td><button type="button" class="btn btn-danger">Remove Course</button></td>
+            <th scope="row" *ngFor=""let course of>{{ schedule.courses}}</th>
             <td> {{ schedule.description }}</td>
             <td>
               {{ schedule.published ? 'Published' : 'Not Published' }}
